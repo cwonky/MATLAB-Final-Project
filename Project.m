@@ -1,2 +1,2 @@
 % Solicit image from user
-image = imread(input("Enter image file name: ",'s')); %hi guys
+image = imread(input("Enter image file name: ",'s')); 
