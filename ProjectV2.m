@@ -6,7 +6,6 @@ clear all; close all; clc;
 imageName = input("Enter image file name: ",'s');
 image = imread(imageName);
 
-% --- ADJUSTMENT 1: COLOR CONTRAST STRETCH ---
 % Looping through channels allows imadjust to work on color photos
 for c = 1:3
     image(:,:,c) = imadjust(image(:,:,c));
@@ -69,10 +68,10 @@ for k = 1:Ncolors
 end
 outline = imdilate(outline, strel('disk', 0));
 
-% 8. INITIALIZE CANVAS VARIABLES (Fixes the Unrecognized Variable Error)
-% We create the white background BEFORE we start the number loop
+% 8. Initilize canvas variables
+% Create the white background before starting the number loop
 whiteBg = uint8(255 * ones(size(finalColoredDiscrete)));
-textImage = whiteBg; % This defines textImage so the loop can see it
+textImage = whiteBg; % Defines textImage so the loop can see it
 
 % Paint outlines black on the textImage
 for c = 1:3
@@ -81,7 +80,7 @@ for c = 1:3
     textImage(:,:,c) = layer;
 end
 
-% 9. INSERT NUMBERS USING DISTANCE TRANSFORM
+% 9. Insert numbers using distance transform
 for k = 1:Ncolors
     mask = indexedMat == k;
     if any(mask(:))
@@ -113,11 +112,11 @@ for k = 1:Ncolors
     end
 end
 
-% 10. DISPLAY RESULTS
+% 10. Display results
 figure('Name', 'The Canvas'); imshow(textImage);
 figure('Name', 'Color Reference'); imshow(finalColoredDiscrete);
 
-% 11. COLOR KEY
+% 11. Make and display color key
 hKey = figure('Name', 'Color Key'); hold on;
 for k = 1:Ncolors
     rectangle('Position', [0.2, Ncolors-k, 0.6, 0.7], 'FaceColor', cm(k,:), 'EdgeColor', 'k');
