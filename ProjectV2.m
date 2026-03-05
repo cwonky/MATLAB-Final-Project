@@ -15,7 +15,7 @@ end
 % 2. Filter image with sharp settings
 smoothedImage = imbilatfilt(image, 'DegreeOfSmoothing', 0.001);
 denoisedImage = medfilt3(smoothedImage, [3 3 3]);
-filteredImage = imopen(denoisedImage, strel('disk', 1));
+filteredImage = imopen(denoisedImage, strel('disk', 0));
 
 % 3. Indexing & Colormap Selection
 availableColormaps = {'hot','cool','parula','turbo','jet', 'lines', 'hsv'};
@@ -67,7 +67,7 @@ for k = 1:Ncolors
     mask = indexedMat == k;
     if any(mask(:)), outline = outline | bwperim(mask, 8); end
 end
-outline = imdilate(outline, strel('disk', 1));
+outline = imdilate(outline, strel('disk', 0));
 
 % 8. INITIALIZE CANVAS VARIABLES (Fixes the Unrecognized Variable Error)
 % We create the white background BEFORE we start the number loop
